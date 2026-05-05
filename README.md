@@ -1,146 +1,96 @@
-# 🎓 Exam Generator - Web Application
+# AUREX — Exam Paper Generation System
 
-A modern web application for generating exam papers and answer keys with AI-powered grammar checking and duplicate detection features.
-
-## 📋 Quick Start for Professors
-
-### Prerequisites
-Before running the application, please install:
-
-1. **Python 3.8 or higher** 
-   - Download from: https://python.org
-   - During installation, make sure to check "Add Python to PATH"
-
-2. **Node.js 18 or higher**
-   - Download from: https://nodejs.org
-   - Choose the "LTS" (Long Term Support) version
-
-### 🚀 One-Click Setup & Run
-
-#### For Mac/Linux:
-1. Open Terminal
-2. Navigate to the project folder: `cd /path/to/SeniorProject1`
-3. Run: `chmod +x setup-and-run.sh && ./setup-and-run.sh`
-
-#### For Windows:
-1. Open Command Prompt
-2. Navigate to the project folder: `cd C:\path\to\SeniorProject1`
-3. If this is your first time running this script, double-click `setup-and-run.bat` or run: `setup-and-run.bat`
-4. If you have run the `setup-and-run.bat` script before, just run: `quick-start.bat`
-
-The script will:
-- ✅ Check if Python and Node.js are installed
-- ✅ Install all dependencies automatically
-- ✅ Build the web application
-- ✅ Start the development server
-
-### 🔧 Manual Setup (Alternative)
-
-If the automatic script doesn't work, you can run these commands manually:
-
-```bash
-# bash
-
-# Terminal 1: Start backend
-cd backend
-source venv/bin/activate  # Windows: source venv\\Scripts\\activate
-python app.py
-
-# Terminal 2: Start frontend
-cd frontend
-npm run dev
-# or
-pnpm run dev
-```
-
-## 📱 Using the Application
-
-Once the application starts, you'll see a browser window with the Exam Generator interface.
-
-### Features:
-- 📄 **Upload Excel files** with question banks
-- 🔍 **Grammar checking** with error highlighting
-- 🔄 **Duplicate detection** and management
-- ✏️ **Question editing** and customization
-- 📋 **Multiple question types**: Multiple choice, True/False, Matching, Written
-- 📑 **Generate Word documents** for exams and answer keys
-- 🖼️ **Image support** for questions
-
-### Basic Workflow:
-1. **Upload** your Excel question bank file
-2. **Review and edit** questions (grammar errors will be highlighted)
-3. **Handle duplicates** if any are detected
-4. **Preview** your exam structure
-5. **Generate** final Word documents
-
-## 📁 File Structure
-
-```
-SeniorProject1/
-├── frontend/           # Next.js frontend application
-├── backend/           # Python Flask backend
-├── setup-and-run.sh  # Mac/Linux setup script
-├── setup-and-run.bat # Windows setup script
-└── README.md         # This file
-```
-
-<!-- ### Building for Distribution
-```bash
-cd frontend
-npm run dist
-```
-
-This creates installers in `frontend/dist-electron/`:
-- `.dmg` file for Mac
-- `.exe` installer for Windows
-- `.AppImage` for Linux -->
-
-## 🐛 Troubleshooting
-
-### Common Issues:
-
-**1. "Python is not installed" error**
-- Install Python from https://python.org
-- Make sure to check "Add Python to PATH" during installation
-- Restart Command Prompt/Terminal after installation
-
-**2. "Node.js is not installed" error**
-- Install Node.js from https://nodejs.org
-- Choose the LTS version
-- Restart Command Prompt/Terminal after installation
-
-**3. "Permission denied" error (Mac/Linux)**
-- Run: `chmod +x setup-and-run.sh`
-- Then: `./setup-and-run.sh`
-
-**4. Application window is blank**
-- Wait a few seconds for the backend to start
-- Try refreshing with Ctrl+R (Cmd+R on Mac)
-- Check if antivirus is blocking the application
-
-**5. "Port already in use" error**
-- Close any other instances of the application
-- Restart your computer if the issue persists
-
-### Getting Help:
-- Check the console/terminal output for error messages
-- Make sure all prerequisites are installed
-- Try running the manual setup steps one by one
-
-## 🔒 Security Note
-
-This application runs locally on your computer and does not send data to external servers. All processing happens on your machine.
-
-## 📞 Support
-
-If you encounter any issues:
-1. Check the troubleshooting section above
-2. Look at the terminal/command prompt output for error messages
-3. Contact the development team with specific error messages
+> **"Smart · Secure · Effortless"** — An intelligent exam paper generation system built for course coordinators at Assumption University Thailand.
 
 ---
 
-**Version:** 1.0.0  
-<!-- **Built with:** Electron, Next.js, Python Flask   -->
-**Built with:** Next.js, Python Flask  
-**License:** Academic Use
+## 🧩 Overview
+
+At Assumption University, many courses are taught across multiple sections by different lecturers. Each lecturer submits questions, and the course coordinator must merge them into a single fair, balanced, and non-repetitive exam — manually checking for duplicates, fixing grammar, and formatting everything from scratch. For a large course, this takes around **4 hours every exam cycle**.
+
+AUREX replaces this entirely with a semi-automated pipeline:
+
+- **Web Application** (Next.js) — for coordinators to upload question banks, curate questions, and export final exam papers
+- **NLP Backend** (Flask) — handles duplicate detection, grammar checking, and Word document generation entirely offline
+
+---
+
+## ✨ Key Features
+
+**Question Bank Processing**
+- Upload Excel-based question banks from multiple lecturers
+- Supports 5 question types: Multiple Choice, True/False, Matching, Short Answer, Essay
+- Configurable duplicate detection and grammar checking per session
+
+**NLP-Powered Quality Assurance**
+- 3-tier duplicate detection: TF-IDF pre-filtering → weighted multi-modal scoring (Sentence-BERT, Jaccard, keyword overlap) → Union-Find clustering
+- Local LanguageTool grammar checking — fully offline, no external API calls
+- Color-coded duplicate risk indicators (Very High / High / Moderate) with suggested replacements
+
+**Interactive Question Editor**
+- Pin questions to lock them through any shuffle
+- Shuffle unpinned questions intelligently by chapter and category
+- Inline question editing: text, answer choices, correct answer, image upload
+- Fake answer management for Matching questions
+
+**Template-Driven Export**
+- Upload custom Word templates with Jinja2 placeholders
+- Generates both exam paper and answer key as `.docx` files
+- Multiple templates supported; set any as default
+
+**Exam Paper Similarity Checker**
+- Upload previous exam papers to compare across semesters
+- Similarity matrix heat map with drill-down per question pair
+- Helps maintain question uniqueness and academic integrity
+
+---
+
+## 🛠 Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Frontend | Next.js, React, TypeScript |
+| Backend | Python, Flask |
+| NLP — Lexical | scikit-learn (TF-IDF, cosine similarity) |
+| NLP — Semantic | Sentence Transformers (all-MiniLM-L6-v2) |
+| NLP — Text Processing | NLTK (tokenization, stemming, stopwords) |
+| Grammar Checking | language-tool-python (local LanguageTool) |
+| Document Generation | docxtpl, Jinja2 |
+| Data Processing | Pandas |
+
+---
+
+## 🏗 System Architecture
+
+![System Architecture](screenshots/system-architecture.png)
+
+---
+
+## 📸 Screenshots
+
+### Upload & Configuration
+![Upload Page](screenshots/upload.png)
+
+### Question Editor
+![Edit Questions](screenshots/edit-questions.png)
+![Duplicate Detection](screenshots/duplicates.png)
+
+### Preview & Export
+![Preview Page](screenshots/preview.png)
+
+### Exam Similarity Checker
+![Similarity Matrix](screenshots/similarity-matrix.png)
+
+---
+
+## 👥 Team
+
+Collaborated with **Khant Min Lwin** and **Thet Myat Noe Thwin**  
+Advised by **Asst. Prof. Dr. Rachsuda Setthawong**  
+Assumption University Thailand — Senior Project 1 (1/2025)
+
+---
+
+## 📄 License
+
+Academic Use Only — Assumption University Thailand, 2025
